@@ -1,0 +1,2 @@
+2025-08-17 18:39:53,944 -- ERROR -- scraping -- Error during scraping: Mercado_Libre_Object.__init__() got an unexpected keyword argument 'seller_id'
+2025-08-17 18:40:34,680 -- ERROR -- scraping -- Error during scraping: 'Mercado_Libre_Object' object has no attribute 'seller_id'

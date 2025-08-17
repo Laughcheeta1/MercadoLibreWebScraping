@@ -5,7 +5,7 @@ class Mercado_Libre_Object:
         price: float, 
         currency: str, 
         condition: str,
-        seller_id: str,
+        seller_name: str,
         first_image_url: str,
         ):
         self.title = title
@@ -13,7 +13,7 @@ class Mercado_Libre_Object:
         self.price = price
         self.currency = currency
         self.condition = condition
-        self.seller_id = seller_id
+        self.seller_name = seller_name
         self.first_image_url = first_image_url
 
     def to_dict(self):
@@ -23,9 +23,9 @@ class Mercado_Libre_Object:
             "price": self.price,
             "currency": self.currency,
             "condition": self.condition,
-            "seller_id": self.seller_id,
+            "seller_name": self.seller_name,
             "first_image_url": self.first_image_url,
         }
 
-
-        
+    def __str__(self):
+        return self.to_dict()
