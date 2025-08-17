@@ -7,7 +7,7 @@ from logging_config import set_up_logger
 logger = set_up_logger(__name__)
 
 class MongoManager:
-    def __init__(self, connection_string: str, database_name: str):
+    def __init__(self, *, connection_string: str = None, database_name: str = None):
         """
         Initialize MongoDB connection manager
         
@@ -15,6 +15,19 @@ class MongoManager:
             connection_string: MongoDB connection string
             database_name: Name of the database to use
         """
+        import os
+        
+        # Use environment variables as defaults if not provided
+        if connection_string is None:
+            connection_string = os.getenv('MONGO_CONNECTION_STRING')
+        if database_name is None:
+            database_name = os.getenv('DATABASE_NAME')
+            
+        if not connection_string:
+            raise ValueError("MongoDB connection string must be provided either as parameter or MONGO_CONNECTION_STRING environment variable")
+        if not database_name:
+            raise ValueError("Database name must be provided either as parameter or DATABASE_NAME environment variable")
+            
         logger.info(f"Initializing MongoDB connection to database: {database_name}")
         try:
             self.client = MongoClient(connection_string)
@@ -23,7 +36,6 @@ class MongoManager:
         except Exception as e:
             logger.error(f"Failed to establish MongoDB connection: {e}")
             raise
-    
     def create_document(self, collection_name: str, document: Dict[str, Any]) -> str:
         """
         Create a new document in the specified collection
