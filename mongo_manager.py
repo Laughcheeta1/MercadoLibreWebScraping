@@ -36,6 +36,7 @@ class MongoManager:
         except Exception as e:
             logger.error(f"Failed to establish MongoDB connection: {e}")
             raise
+        
     def create_document(self, collection_name: str, document: Dict[str, Any]) -> str:
         """
         Create a new document in the specified collection
@@ -55,7 +56,7 @@ class MongoManager:
             
             # Add timestamp if not present
             if 'created_at' not in document:
-                document['created_at'] = datetime.utcnow()
+                document['created_at'] = datetime.now(datetime.timezone.utc)
             
             result = collection.insert_one(document)
             document_id = str(result.inserted_id)
