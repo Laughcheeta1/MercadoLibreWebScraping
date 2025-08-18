@@ -82,6 +82,7 @@ def perform_main_search_page_scrapping(search_query, driver_path='/usr/bin/chrom
             if link:
                 titulo = link.text.strip()
                 href = link.get('href')
+                result.append({ "title": titulo, "url": href })
                 logger.info(f'Título: {titulo}')
                 logger.info(f'URL: {href}')
 
@@ -97,9 +98,10 @@ def perform_main_search_page_scrapping(search_query, driver_path='/usr/bin/chrom
         
     logger.info("Finished webscrapping all pages")
     driver.quit()
+    return results
 
 
-def perform_item_page_scrapping(url, driver_path='/usr/bin/chromedriver', web_driver_type=WebDriverType.CHROME):
+def perform_item_page_scrapping(url: str, category: str, driver_path='/usr/bin/chromedriver', web_driver_type=WebDriverType.CHROME):
     """
     Perform a scrapping of the item page in mercado libre.
     Args:
@@ -191,7 +193,8 @@ def perform_item_page_scrapping(url, driver_path='/usr/bin/chromedriver', web_dr
             currency=currency,
             condition=condition,
             seller_name=seller_name,
-            first_image_url=first_image_url
+            first_image_url=first_image_url,
+            category=category,
         )
         
         logger.info(f"Result object: {result.to_dict()}")

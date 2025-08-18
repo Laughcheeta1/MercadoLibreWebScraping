@@ -36,7 +36,31 @@ class MongoManager:
         except Exception as e:
             logger.error(f"Failed to establish MongoDB connection: {e}")
             raise
+
+    def insert_many(self, documents: List[Dict[str, Any]], collection_name: str="Items") -> List[str]:
+        """
+        Insert multiple documents into the specified collection
         
+        Args:
+            collection_name: Name of the collection
+            documents: List of documents to insert
+            
+        Returns:
+            List of document IDs
+        """
+        logger.info(f"Inserting multiple documents into collection: {collection_name}")
+        logger.debug(f"Documents: {documents}")
+        
+        try:
+            collection = self.db[collection_name]
+            result = collection.insert_many(documents)
+            document_ids = [str(doc_id) for doc_id in result.inserted_ids]
+            logger.info(f"Successfully inserted {len(document_ids)} documents")
+            return document_ids
+        except Exception as e:
+            logger.error(f"Failed to insert documents into collection {collection_name}: {e}")
+            raise
+
     def create_document(self, collection_name: str, document: Dict[str, Any]) -> str:
         """
         Create a new document in the specified collection

@@ -7,6 +7,7 @@ class Mercado_Libre_Object:
         condition: str,
         seller_name: str,
         first_image_url: str,
+        category: str,
         ):
         self.title = title
         self.url = url
@@ -15,6 +16,7 @@ class Mercado_Libre_Object:
         self.condition = condition
         self.seller_name = seller_name
         self.first_image_url = first_image_url
+        self.category = category
 
     def to_dict(self):
         return {
@@ -25,6 +27,7 @@ class Mercado_Libre_Object:
             "condition": self.condition,
             "seller_name": self.seller_name,
             "first_image_url": self.first_image_url,
+            "category": self.category,
         }
 
     def __str__(self):
