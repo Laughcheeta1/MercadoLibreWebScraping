@@ -82,7 +82,7 @@ def perform_main_search_page_scrapping(search_query, driver_path='/usr/bin/chrom
             if link:
                 titulo = link.text.strip()
                 href = link.get('href')
-                result.append({ "title": titulo, "url": href })
+                results.append({ "title": titulo, "url": href })
                 logger.info(f'Título: {titulo}')
                 logger.info(f'URL: {href}')
 

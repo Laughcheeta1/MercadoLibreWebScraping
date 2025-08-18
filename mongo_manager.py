@@ -3,8 +3,10 @@ from bson import ObjectId
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 from logging_config import set_up_logger
+from dotenv import load_dotenv
 
 logger = set_up_logger(__name__)
+load_dotenv()
 
 class MongoManager:
     def __init__(self, *, connection_string: str = None, database_name: str = None):

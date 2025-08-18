@@ -13,7 +13,7 @@ def main():
 
     results = perform_main_search_page_scrapping(desired_search, max_pages=number_of_pages)
     logger.info(f"Found {len(results)} results")
-    if print_results == "y":
+    if print_results.lower().strip() == "y":
         for idx, result in enumerate(results):
             logger.info(f"Item {idx+1}: {result['title']}")
 
@@ -24,8 +24,10 @@ def main():
         logger.info(f"Scraped item: {item_page_result.to_dict()}")
         mercado_libre_objects.append(item_page_result.to_dict())
 
-        if print_results == "y":
-            logger.info(f"Item {idx+1}: {item_page_result.to_dict().remove('url')}")
+        if print_results.strip().lower() == "y":
+            item_dict = item_page_result.to_dict()
+            item_dict.pop('url', None)
+            logger.info(f"Item {idx+1}: {item_dict}")
 
     mongo_manager.insert_many(mercado_libre_objects)
     logger.info(f"Inserted {len(mercado_libre_objects)} mercado libre objects into the database")
