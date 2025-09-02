@@ -17,20 +17,21 @@ def main():
         for idx, result in enumerate(results):
             logger.info(f"Item {idx+1}: {result['title']}")
 
-    mercado_libre_objects = []
+    inserted_count = 0
     for result in results:
         logger.info(f"Scraping item: {result['title']}")
         item_page_result = perform_item_page_scrapping(result['url'], category)
         logger.info(f"Scraped item: {item_page_result.to_dict()}")
-        mercado_libre_objects.append(item_page_result.to_dict())
+
+        mongo_manager.create_document(item_page_result.to_dict())
+        inserted_count += 1
 
         if print_results.strip().lower() == "y":
             item_dict = item_page_result.to_dict()
             item_dict.pop('url', None)
             logger.info(f"Item {idx+1}: {item_dict}")
 
-    mongo_manager.insert_many(mercado_libre_objects)
-    logger.info(f"Inserted {len(mercado_libre_objects)} mercado libre objects into the database")
+    logger.info(f"Inserted {len(inserted_count)} mercado libre objects into the database")
 
 if __name__ == "__main__":
     main()

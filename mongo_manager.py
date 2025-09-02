@@ -63,7 +63,7 @@ class MongoManager:
             logger.error(f"Failed to insert documents into collection {collection_name}: {e}")
             raise
 
-    def create_document(self, collection_name: str, document: Dict[str, Any]) -> str:
+    def create_document(self, document: Dict[str, Any], collection_name: str="Items") -> str:
         """
         Create a new document in the specified collection
         
