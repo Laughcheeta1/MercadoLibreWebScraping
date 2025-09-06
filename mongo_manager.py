@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson import ObjectId
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional, List
 from logging_config import set_up_logger
 from dotenv import load_dotenv
@@ -82,7 +82,7 @@ class MongoManager:
             
             # Add timestamp if not present
             if 'created_at' not in document:
-                document['created_at'] = datetime.now(datetime.timezone.utc)
+                document['created_at'] = datetime.now(timezone.utc)
             
             result = collection.insert_one(document)
             document_id = str(result.inserted_id)
